@@ -10,6 +10,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = [
     "bharatsolanke.info",
+    "www.bharatsolanke.info",
     "127.0.0.1",
     "localhost",
     "https://bharatsportfolio.onrender.com",

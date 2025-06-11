@@ -1,0 +1,941 @@
+
+{% extends 'Home/navbar.html' %}
+{% load static %}
+{% load custom_filters%}
+
+{% block content %}
+{% if messages %}
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+    {% for message in messages %}
+      <div class="toast align-items-center text-bg-{{ message.tags }} border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" data-bs-autohide="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ message }}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% if hero_content %}
+  <section id="hero" class="hero section" style="margin-top: 5%;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 content-col" data-aos="fade-up">
+          <div class="content">
+            <div class="agency-name">
+              <h2>{{ hero_content.agency_name }}</h2>
+            </div>
+
+            <div class="main-heading">
+              <h1>{{ hero_content.main_heading|linebreaksbr }}</h1>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="description" style="font-weight:500">
+              <p style="color: white; font-size: 1.15em; line-height: 1.6;">
+                {{ hero_content.description }}
+              </p>
+            </div>
+
+            <div class="cta-button">
+              <a href="#services" class="btn">
+                <span>EXPLORE SERVICES</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5" data-aos="zoom-out">
+          <div class="visual-content">
+            <div class="fluid-shape">
+              {% if hero_content.fluid_image %}
+                <img src="{{ hero_content.fluid_image.url }}" alt="Abstract Fluid Shape" class="fluid-img" style="height:700px">
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% if about_content %}
+  <section id="about" class="about section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>About</h2>
+      <div><span>Learn More</span> <span class="description-title">{{ about_content.title }}</span></div>
+    </div>
+
+    <div class="container">
+      <div class="row gx-5 align-items-center">
+        <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+          <div class="about-image position-relative">
+            {% if about_content.about_image %}
+            <img src="{{ about_content.about_image.url }}" class="img-fluid rounded-4 shadow-sm" alt="About Image" loading="lazy" style="height:700px">
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-lg-6 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="300">
+          <div class="about-content">
+            <h2>{{ about_content.subtitle }}</h2>
+            <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #f8f9fa;">
+                {{ about_content.main_description }}
+            </p>
+
+            <div class="row g-4 mt-3">
+              {% for feature in about_content.features.all %}
+              <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
+                <div class="feature-item">
+                  <i class="{{ feature.icon_class }}"></i>
+                  <h5>{{ feature.heading }}</h5>
+                  <p>{{ feature.description }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if service_section %}
+  <section id="services" class="services section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Services</h2>
+      <div><span>Check</span> <span class="description-title">Services</span></div>
+    </div><div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="service-header">
+        <div class="row align-items-center">
+          <div class="col-lg-8 col-md-12">
+            <div class="service-intro">
+              <h2 class="service-heading">
+                <div>{{ service_section.intro_heading_part1 }}</div>
+                <div><span>{{ service_section.intro_heading_part2 }}</span></div>
+              </h2>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="service-summary">
+              <p>{{ service_section.summary }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        {% for card in service_section.cards.all %}
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter | multiply:100 }}">
+          <div class="service-card position-relative z-1">
+            <div class="service-icon">
+              <i class="{{ card.icon_class }}"></i>
+            </div>
+            <h3>
+              <a>
+                {{ card.title }}
+              </a>
+            </h3>
+            <p>{{ card.description }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div id="steps" class="steps section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Steps</h2>
+        <div><span>How we</span> <span class="description-title">Work</span></div>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="steps-wrapper">
+          {% for step in steps %}
+          <div class="step-item" data-aos="fade-{{ forloop.counter | divisibleby:2 | yesno:'left,right' }}" data-aos-delay="{{ forloop.counter | multiply:100 | add:100 }}">
+            <div class="step-content">
+              <div class="step-icon">
+                <i class="{{ step.icon_class }}"></i>
+              </div>
+              <div class="step-info">
+                <span class="step-number">{{ step.step_number }}</span>
+                <h3>{{ step.heading }}</h3>
+                <p>{{ step.description }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if blog_promotion %}
+  <section id="blog" class="call-to-action section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2 style="font-size:14px;font-weight:500;line-height: 1px">Blogs</h2>
+      <div><span>Check </span> <span class="description-title">Blogs</span></div>
+    </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="advertise-1 d-flex flex-column flex-lg-row gap-4 align-items-center position-relative">
+        <div class="content-left flex-grow-1" data-aos="fade-right" data-aos-delay="200">
+          <span class="badge text-uppercase mb-2">{{ blog_promotion.badge_text }}</span>
+          <h2>{{ blog_promotion.heading }}</h2>
+          <p class="my-4">{{ blog_promotion.paragraph }}</p>
+          <div class="features d-flex flex-wrap gap-3 mb-4">
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ blog_promotion.feature1 }}</span>
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ blog_promotion.feature2 }}</span>
+            </div>
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ blog_promotion.feature3 }}</span>
+            </div>
+          </div>
+          <div class="cta-buttons d-flex flex-wrap gap-3">
+            <a href="{{ blog_promotion.read_blog_url }}" class="btn btn-primary">Read Blog</a>
+            {% comment %} <a href="{{ url 'blogs' }}" class="btn btn-primary">View All Blogs</a> {% endcomment %}
+            <a href="{% url 'blogs' %}" class="btn btn-primary">View All Blogs</a>
+          </div>
+        </div>
+
+        <div class="content-right position-relative" data-aos="fade-left" data-aos-delay="300">
+          {% if blog_promotion.image %}
+          <img src="{{ blog_promotion.image.url }}" alt="Digital Platform" class="img-fluid rounded-4">
+          {% endif %}
+          <div class="floating-card">
+            <div class="card-icon">
+              <i class="bi bi-graph-up-arrow"></i>
+            </div>
+          </div>
+        </div>
+        <div class="decoration">
+          <div class="circle-1"></div>
+          <div class="circle-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if skills %}
+  <section id="skill" class="portfolio section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Skills</h2>
+      <div><span>Check My</span> <span class="description-title">Skills</span></div>
+    </div>
+
+    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+      <div class="row g-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
+        {% for skill in skills %}
+        <div class="col-xl-3 col-lg-4 col-md-6 portfolio-item isotope-item {{ skill.slug }}">
+          <article class="portfolio-entry text-center p-3 border rounded">
+            <h3 class="entry-title">{{ skill.name }}</h3>
+          </article>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if experiences %}
+  <section id="experiance" class=" section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <h2> Experience</h2>
+      <div><span class="description-title">Professional Experience</span></div>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      {% for experience in experiences %}
+      <div class="experience-item my-5 p-4 border rounded shadow-sm" data-aos="fade-up" data-aos-delay="200">
+        <div class="row">
+          <div class="col-lg-12">
+            <h4>{{ experience.job_title }}</h4>
+            <p><strong>{{ experience.company_name }}</strong> | {{ experience.duration }}</p>
+            <ul>
+              {% for responsibility in experience.responsibilities %}
+              <li>{{ responsibility }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+  <section id="testimonials" class="testimonials section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <div class="d-flex justify-content-between align-items-center flex-wrap w-100">
+        <div class="text-start">
+          <h2>Testimonials</h2>
+          <div><span>What Clients</span> <span class="description-title">Say</span></div>
+        </div>
+        <div class="text-end">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#testimonialModal">
+            <i class="bi bi-chat-right-text"></i> Submit Your Testimonial
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+  
+      {% if approved_testimonials %}
+      <div class="testimonials-slider swiper init-swiper">
+        {# Swiper Configuration - Keep this as provided for Swiper initialization #}
+        <script type="application/json" class="swiper-config">
+          {
+            "slidesPerView": 1,
+            "loop": true,
+            "speed": 600,
+            "autoplay": {
+              "delay": 5000
+            },
+            "navigation": {
+              "nextEl": ".swiper-button-next",
+              "prevEl": ".swiper-button-prev"
+            },
+            "pagination": {
+              "el": ".swiper-pagination",
+              "clickable": true
+            }
+          }
+        </script>
+  
+        <div class="swiper-wrapper">
+  
+          {# Iterate through dynamic testimonials for each swiper-slide #}
+          {% for testimonial in approved_testimonials %}
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <div class="row">
+                <div class="col-lg-8">
+                  {# Removed static H2 from new code as testimonial_text is often just the main content #}
+                  <p class="testimonial-text">
+                    "{{ testimonial.testimonial_text }}"
+                  </p>
+                  {# Add stars here, re-using your fixed logic #}
+                  <div class="testimonial-stars">
+                    {# Render filled stars #}
+                    {% for _ in ""|ljust:testimonial.rating %}
+                      <i class="bi bi-star-fill"></i>
+                    {% endfor %}
+                    {# Calculate and render empty stars #}
+                    {% with empty_stars_count=5|subtract:testimonial.rating %}
+                        {% for _ in empty_stars_count|get_range %}
+                            <i class="bi bi-star"></i>
+                        {% endfor %}
+                    {% endwith %}
+                  </div>
+                  <div class="profile d-flex align-items-center mt-3"> {# Added mt-3 for spacing #}
+                    {% if testimonial.client_image %}
+                      <img src="{{ testimonial.client_image.url }}" class="profile-img" alt="{{ testimonial.client_name }}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%;"> {# Added styles #}
+                    {% elif testimonial.company_logo %}
+                      <img src="{{ testimonial.company_logo.url }}" class="profile-img" alt="{{ testimonial.company_name }} Logo" style="max-width: 100px; max-height: 70px; object-fit: contain;"> {# Added styles #}
+                    {% else %}
+                      {# Use a placeholder icon if no image #}
+                      <i class="bi bi-person-circle fs-3 me-2" style="color: #6c757d;"></i> {# Added styles #}
+                    {% endif %}
+                    <div class="profile-info">
+                      <h3>{{ testimonial.client_name }}</h3>
+                      <p class="fst-italic">
+                        {% if testimonial.client_title %}{{ testimonial.client_title }}{% endif %}
+                        {% if testimonial.company_name %} at {{ testimonial.company_name }}{% endif %}
+                        {% if testimonial.linkedin_url %}
+                          <br><a href="{{ testimonial.linkedin_url }}" target="_blank" class="text-decoration-none">
+                            <i class="bi bi-linkedin"></i> LinkedIn
+                          </a>
+                        {% endif %}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 d-none d-lg-block">
+                  <div class="featured-img-wrapper">
+                    {# Use client_image for the large featured image if available, else company_logo, else a default #}
+                    {% if testimonial.client_image %}
+                      <img src="{{ testimonial.client_image.url }}" class="featured-img" alt="{{ testimonial.client_name }}">
+                    {% elif testimonial.company_logo %}
+                      <img src="{{ testimonial.company_logo.url }}" class="featured-img" alt="{{ testimonial.company_name }} Logo">
+                    {% else %}
+                      {# You might want a default placeholder image here if neither is available #}
+                      <img src="{% static 'assets/img/default-testimonial-bg.webp' %}" class="featured-img" alt="Default Testimonial">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+  
+        </div>
+  
+        <div class="swiper-navigation w-100 d-flex align-items-center justify-content-center">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+        <div class="swiper-pagination"></div> {# Added pagination #}
+  
+      </div>
+      {% else %}
+      <p class="text-center">No testimonials yet. Be the first to share your experience!</p>
+      {% endif %}
+  
+    </div>
+  
+  </section>
+  
+  <div class="modal fade" id="testimonialModal" tabindex="-1" aria-labelledby="testimonialModalLabel" aria-hidden="true">
+  </div>
+
+  <div class="modal fade" id="testimonialModal" tabindex="-1" aria-labelledby="testimonialModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="testimonialModalLabel">Submit Your Testimonial</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class=" small">We appreciate your feedback! Your testimonial will be reviewed before being displayed on the site.</p>
+
+          <form action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="form_id" value="testimonial_form_submission">
+
+            {% if testimonial_form_errors.general %}
+            <div class="alert alert-danger">
+                <p>{{ testimonial_form_errors.general }}</p>
+            </div>
+            {% endif %}
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <i class="bi bi-person"></i>
+                    <input type="text" class="form-control" id="id_client_name" name="client_name"
+                           value="{{ testimonial_submitted_data.client_name|default_if_none:'' }}"
+                           placeholder="Your Name" required>
+                  </div>
+                  {% if testimonial_form_errors.client_name %}
+                      <small class="text-danger">{{ testimonial_form_errors.client_name }}</small>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <i class="bi bi-person-badge"></i>
+                    <input type="text" class="form-control" id="id_client_title" name="client_title"
+                           value="{{ testimonial_submitted_data.client_title|default_if_none:'' }}"
+                           placeholder="Your Title (Optional)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <i class="bi bi-building"></i>
+                    <input type="text" class="form-control" id="id_company_name" name="company_name"
+                           value="{{ testimonial_submitted_data.company_name|default_if_none:'' }}"
+                           placeholder="Company Name (Optional)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <i class="bi bi-linkedin"></i>
+                    <input type="url" class="form-control" id="id_linkedin_url" name="linkedin_url"
+                           value="{{ testimonial_submitted_data.linkedin_url|default_if_none:'' }}"
+                           placeholder="LinkedIn Profile URL (Optional)">
+                  </div>
+                  {% if testimonial_form_errors.linkedin_url %}
+                      <small class="text-danger">{{ testimonial_form_errors.linkedin_url }}</small>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Your Photo (Optional)</label>
+                  <input type="file" class="form-control d-none" id="id_client_image" name="client_image" accept="image/*">
+                  <label for="id_client_image" class="btn btn-dark custom-file-upload">
+                    <i class="bi bi-upload"></i> Choose Photo
+                  </label>
+                  <span id="client_image_filename" class="file-name  ms-2 small">No file chosen</span>
+                  <div class="form-text  mt-2">Upload your photo (e.g., headshot).</div>
+                  {% if testimonial_form_errors.client_image %}
+                      <small class="text-danger">{{ testimonial_form_errors.client_image }}</small>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-label">Company Logo (Optional)</label>
+                  <input type="file" class="form-control d-none" id="id_company_logo" name="company_logo" accept="image/*">
+                  <label for="id_company_logo" class="btn btn-dark custom-file-upload">
+                    <i class="bi bi-upload"></i> Choose Logo
+                  </label>
+                  <span id="company_logo_filename" class="file-name  ms-2 small">No file chosen</span>
+                  <div class="form-text  mt-2">Upload your company logo.</div>
+                  {% if testimonial_form_errors.company_logo %}
+                      <small class="text-danger">{{ testimonial_form_errors.company_logo }}</small>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <i class="bi bi-chat-right-text"></i>
+                    <textarea class="form-control" id="id_testimonial_text" name="testimonial_text" rows="5" required
+                              placeholder="Share your experience here...">{{ testimonial_submitted_data.testimonial_text|default_if_none:'' }}</textarea>
+                  </div>
+                  {% if testimonial_form_errors.testimonial_text %}
+                      <small class="text-danger">{{ testimonial_form_errors.testimonial_text }}</small>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="id_rating" class="form-label">Your Rating (1-5 Stars)</label>
+                  <select class="form-select" id="id_rating" name="rating">
+                    <option value="5" {% if testimonial_submitted_data.rating == '5' %}selected{% endif %}>5 Stars</option>
+                    <option value="4" {% if testimonial_submitted_data.rating == '4' %}selected{% endif %}>4 Stars</option>
+                    <option value="3" {% if testimonial_submitted_data.rating == '3' %}selected{% endif %}>3 Stars</option>
+                    <option value="2" {% if testimonial_submitted_data.rating == '2' %}selected{% endif %}>2 Stars</option>
+                    <option value="1" {% if testimonial_submitted_data.rating == '1' %}selected{% endif %}>1 Star</option>
+                  </select>
+                  {% if testimonial_form_errors.rating %}
+                      <small class="text-danger">{{ testimonial_form_errors.rating }}</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn-sm btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% if contact_info %}
+  <section id="contact" class="contact section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Contact</h2>
+      <div><span>Let's</span> <span class="description-title">Connect</span></div>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row gy-4 mb-5">
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="contact-info-box">
+            <div class="icon-box">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div class="info-content">
+              <h4>Address</h4>
+              <p>{{ contact_info.address }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="contact-info-box">
+            <div class="icon-box">
+              <i class="bi bi-envelope"></i>
+            </div>
+            <div class="info-content">
+              <h4>Email Address</h4>
+              <p>{{ contact_info.email1 }}</p>
+              {% if contact_info.email2 %}<p>{{ contact_info.email2 }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="contact-info-box">
+            <div class="icon-box">
+              <i class="bi bi-arrow-down-left-square"></i>
+            </div>
+            <div class="info-content">
+              <h4>MY RESUME</h4>
+              {% if contact_info.resume_file %}
+              <a class="btn-getstarted" href="{{ contact_info.resume_file.url }}" target="_blank" onclick="setTimeout(() => { window.print(); }, 1000);" > DOWNLOAD RESUME </a>
+              {% else %}
+              <p>Resume not available.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
+        <div class="col-lg-10">
+          <div class="contact-form-wrapper">
+            <h2 class="text-center mb-4">Get in Touch</h2>
+            <form action="{% url 'home' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_id" value="contact_form_submission">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <i class="bi bi-person"></i>
+                      <input type="text" class="form-control" name="name" placeholder="First Name" required
+                             value="{{ submitted_data.name|default_if_none:'' }}">
+                    </div>
+                    {% if errors.name %} <small class="text-danger">{{ errors.name }}</small> {% endif %}
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <i class="bi bi-envelope"></i>
+                      <input type="email" class="form-control" name="email" placeholder="Email Address" required
+                             value="{{ submitted_data.email|default_if_none:'' }}">
+                    </div>
+                    {% if errors.email %} <small class="text-danger">{{ errors.email }}</small> {% endif %}
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <i class="bi bi-phone"></i>
+                      <input type="tel" class="form-control" name="phone" placeholder="Phone Number"
+                             pattern="[0-9]{10}" maxlength="10" inputmode="numeric"
+                             value="{{ submitted_data.phone|default_if_none:'' }}">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <i class="bi bi-text-left"></i>
+                      <input type="text" class="form-control" name="subject" placeholder="Subject" required
+                             value="{{ submitted_data.subject|default_if_none:'' }}">
+                    </div>
+                    {% if errors.subject %} <small class="text-danger">{{ errors.subject }}</small> {% endif %}
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group">
+                    <div class="input-with-icon">
+                      <i class="bi bi-chat-dots message-icon"></i>
+                      <textarea class="form-control" name="message" placeholder="Write Message..." style="height: 180px" required>{{ submitted_data.message|default_if_none:'' }}</textarea>
+                    </div>
+                    {% if errors.message %} <small class="text-danger">{{ errors.message }}</small> {% endif %}
+                  </div>
+                </div>
+
+                {% if errors.general %}
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        <p>{{ errors.general }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary btn-submit">SEND MESSAGE</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  {% endif %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastElements = document.querySelectorAll('.toast');
+      toastElements.forEach(function (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        document.querySelectorAll('.alert').forEach(function (alert) {
+          alert.classList.remove('show');
+          alert.classList.add('hide');
+          setTimeout(function () {
+            alert.remove();
+          }, 500);
+        });
+      }, 5000);
+
+    {% if testimonial_form_errors %}
+      var testimonialModal = new bootstrap.Modal(document.getElementById('testimonialModal'));
+      testimonialModal.show();
+    {% endif %}
+
+        function handleFileInput(event) {
+            const input = event.target;
+            const filenameSpanId = input.id + '_filename';
+            const filenameSpan = document.getElementById(filenameSpanId);
+
+            if (input.files && input.files.length > 0) {
+                filenameSpan.textContent = input.files[0].name;
+            } else {
+                filenameSpan.textContent = 'No file chosen';
+            }
+        }
+
+        const clientImageInput = document.getElementById('id_client_image');
+        if (clientImageInput) {
+            clientImageInput.addEventListener('change', handleFileInput);
+        }
+
+        const companyLogoInput = document.getElementById('id_company_logo');
+        if (companyLogoInput) {
+            companyLogoInput.addEventListener('change', handleFileInput);
+        }
+    });
+  </script>
+
+  <style>
+    .contact-form-wrapper,
+    .modal-body form {
+        padding: 30px;
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        color: #f8f9fa;
+    }
+
+    .contact-form-wrapper h2,
+    .modal-body .modal-title {
+        color: #ffffff;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 15px;
+    }
+    .input-with-icon {
+        position: relative;
+    }
+
+    .input-with-icon i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #adb5bd;
+        pointer-events: none;
+        font-size: 1.1em;
+        z-index: 2;
+    }
+
+    .input-with-icon .message-icon {
+        top: 20px;
+        transform: translateY(0);
+    }
+
+    .form-control {
+        background-color: #333333;
+        border: 1px solid #555;
+        color: #f8f9fa;
+        padding-left: 45px;
+        padding-right: 15px;
+        height: 50px;
+        border-radius: 5px;
+    }
+
+    .form-control::placeholder {
+        color: #bbbbbb;
+        opacity: 0.7;
+    }
+    .form-control::-webkit-input-placeholder {
+        color: #bbbbbb;
+        opacity: 0.7;
+    }
+    .form-control::-moz-placeholder {
+        color: #bbbbbb;
+        opacity: 0.7;
+    }
+    .form-control:-ms-input-placeholder {
+        color: #bbbbbb;
+        opacity: 0.7;
+    }
+    .form-control:-moz-placeholder {
+        color: #bbbbbb;
+        opacity: 0.7;
+    }
+
+    .form-control:focus {
+        background-color: #444444;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        color: #f8f9fa;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        resize: vertical;
+    }
+
+    .form-label {
+        color: #adb5bd;
+        margin-bottom: 5px;
+        display: block;
+        font-size: 0.9em;
+    }
+
+    .form-text {
+        color: #bbbbbb;
+        font-size: 0.85em;
+        margin-top: 5px;
+    }
+
+    .form-select {
+        background-color: #333333;
+        border: 1px solid #555;
+        color: #f8f9fa;
+        height: 50px;
+        padding-left: 15px;
+        border-radius: 5px;
+    }
+
+    .form-select option {
+        background-color: #333333;
+        color: #f8f9fa;
+    }
+
+    .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-submit,
+    .modal-footer .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: #ffffff;
+        padding: 12px 30px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover,
+    .modal-footer .btn-primary:hover {
+        background-color: #0a58ca;
+        border-color: #0a58ca;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5c636a;
+        border-color: #5c636a;
+    }
+
+    .modal-content {
+        background-color: #1a1a1a;
+        color: #f8f9fa;
+        border: none;
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #333;
+        color: #ffffff;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #333;
+    }
+
+    @media (max-width: 767.98px) {
+        .testimonials .section-title .d-flex {
+            flex-direction: column;
+            align-items: center !important;
+        }
+        .testimonials .section-title .text-start,
+        .testimonials .section-title .text-end {
+            text-align: center !important;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .testimonials .section-title .text-end button {
+            width: 100%;
+        }
+    }
+    .custom-file-upload {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .custom-file-upload i {
+        margin-right: 8px;
+        font-size: 1.1em;
+    }
+
+    .custom-file-upload:hover {
+        opacity: 0.8;
+    }
+
+    .file-name {
+        margin-left: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 150px);
+    }
+
+    .form-group .form-text {
+        margin-top: 5px;
+        margin-bottom: 0;
+        display: block;
+    }
+
+    .modal-body .form-group label:not(.custom-file-upload) {
+        margin-bottom: 8px;
+    }
+  </style>
+{% endblock content %}

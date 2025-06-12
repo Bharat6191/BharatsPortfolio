@@ -1,13 +1,18 @@
 from django.db import models
 from django.utils import timezone
+from cloudinary_storage.storage import MediaCloudinaryStorage  # Cloudinary storage
 
 
 class HeroSection(models.Model):
     agency_name = models.CharField(max_length=200)
     main_heading = models.CharField(max_length=500)
     description = models.TextField()
-    # You might want to upload an image here
-    fluid_image = models.ImageField(upload_to="hero_images/", blank=True, null=True)
+    fluid_image = models.ImageField(
+        upload_to="hero_images/",
+        storage=MediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return "Hero Section Content"
@@ -16,7 +21,12 @@ class HeroSection(models.Model):
 class AboutSection(models.Model):
     title = models.CharField(max_length=200)
     subtitle = models.CharField(max_length=200)
-    about_image = models.ImageField(upload_to="about_images/", blank=True, null=True)
+    about_image = models.ImageField(
+        upload_to="about_images/",
+        storage=MediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+    )
     main_description = models.TextField()
 
     def __str__(self):
@@ -27,7 +37,7 @@ class FeatureItem(models.Model):
     about_section = models.ForeignKey(
         AboutSection, on_delete=models.CASCADE, related_name="features"
     )
-    icon_class = models.CharField(max_length=100)  # e.g., 'bi bi-check-circle-fill'
+    icon_class = models.CharField(max_length=100)
     heading = models.CharField(max_length=200)
     description = models.TextField()
 
@@ -48,7 +58,7 @@ class ServiceCard(models.Model):
     service_section = models.ForeignKey(
         ServiceSection, on_delete=models.CASCADE, related_name="cards"
     )
-    icon_class = models.CharField(max_length=100)  # e.g., 'bi bi-palette'
+    icon_class = models.CharField(max_length=100)
     title = models.CharField(max_length=200)
     description = models.TextField()
 
@@ -77,36 +87,17 @@ class Skill(models.Model):
         return self.name
 
 
-# class Experience(models.Model):
-#     job_title = models.CharField(max_length=200)
-#     company_name = models.CharField(max_length=200)
-#     duration = models.CharField(max_length=200)
-#     responsibilities = models.JSONField(
-#         help_text="Enter responsibilities as a JSON array of strings."
-#     )  # Stores a list of strings
-
-#     def __str__(self):
-#         return f"{self.job_title} at {self.company_name}"
-
-
 class Experience(models.Model):
     job_title = models.CharField(max_length=200)
     company_name = models.CharField(max_length=200)
-    duration = models.CharField(
-        max_length=100
-    )  # Keep this for display (e.g., "Jan 2025 - Present")
-    start_date = models.DateField(
-        null=True, blank=True
-    )  # New field for precise sorting
-    responsibilities = models.JSONField(default=list)  # Stores a list of strings
+    duration = models.CharField(max_length=100)
+    start_date = models.DateField(null=True, blank=True)
+    responsibilities = models.JSONField(default=list)
 
     def __str__(self):
         return f"{self.job_title} at {self.company_name}"
 
     class Meta:
-        # Sort by start_date in descending order (most recent first)
-        # If start_date is null, those will typically appear first or last depending on DB.
-        # It's best to always populate start_date.
         ordering = ["-start_date"]
         verbose_name = "Experience"
         verbose_name_plural = "Experiences"
@@ -116,16 +107,14 @@ class ContactInfo(models.Model):
     address = models.CharField(max_length=300)
     email1 = models.EmailField()
     email2 = models.EmailField(blank=True, null=True)
-    # resume_link = models.URLField(
-    #     blank=True, null=True, help_text="Link to your downloadable resume"
-    # )
-    resume_file = models.FileField(upload_to="resumes/", blank=True, null=True)
+    resume_file = models.FileField(
+        upload_to="resumes/", storage=MediaCloudinaryStorage(), blank=True, null=True
+    )
 
     def __str__(self):
         return "Contact Information"
 
 
-# For the Blog/Call-to-Action section, you might have:
 class Blog(models.Model):
     badge_text = models.CharField(max_length=50, default="Don't Miss!")
     heading = models.CharField(max_length=200)
@@ -133,7 +122,12 @@ class Blog(models.Model):
     feature1 = models.CharField(max_length=100)
     feature2 = models.CharField(max_length=100)
     feature3 = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="blog_promo_images/", blank=True, null=True)
+    image = models.ImageField(
+        upload_to="blog_promo_images/",
+        storage=MediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+    )
     read_blog_url = models.URLField(default="#")
     view_all_blogs_url = models.TextField(default="{% url 'blogs' %}")
     published_date = models.DateTimeField(default=timezone.now)
@@ -146,17 +140,13 @@ class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.BigIntegerField(null=True, blank=True)
-    subject = models.CharField(
-        max_length=200, blank=True, null=True
-    )  # Subject can be optional if you want
+    subject = models.CharField(max_length=200, blank=True, null=True)
     message = models.TextField()
-    timestamp = models.DateTimeField(
-        auto_now_add=True
-    )  # Automatically sets the date/time when created
-    is_read = models.BooleanField(default=False)  # To track if you've read the message
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["-timestamp"]  # Order by newest message first
+        ordering = ["-timestamp"]
         verbose_name = "Contact Message"
         verbose_name_plural = "Contact Messages"
 
@@ -166,37 +156,21 @@ class ContactMessage(models.Model):
 
 class Testimonial(models.Model):
     client_name = models.CharField(max_length=100, help_text="Name of the client.")
-    client_title = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True,
-        help_text="e.g., 'CEO of XYZ Corp', 'Marketing Manager'",
-    )
-    company_name = models.CharField(
-        max_length=150,
-        blank=True,
-        null=True,
-        help_text="Company the client works for (optional).",
-    )
-    linkedin_url = models.URLField(
-        max_length=200,
-        blank=True,
-        null=True,
-        help_text="Optional: LinkedIn profile URL for verification.",
-    )
-    testimonial_text = models.TextField(help_text="The actual testimonial message.")
-
+    client_title = models.CharField(max_length=100, blank=True, null=True)
+    company_name = models.CharField(max_length=150, blank=True, null=True)
+    linkedin_url = models.URLField(max_length=200, blank=True, null=True)
+    testimonial_text = models.TextField()
     client_image = models.ImageField(
         upload_to="testimonials/client_images/",
+        storage=MediaCloudinaryStorage(),
         blank=True,
         null=True,
-        help_text="Optional: Upload your photo (e.g., headshot).",
     )
     company_logo = models.ImageField(
         upload_to="testimonials/company_logos/",
+        storage=MediaCloudinaryStorage(),
         blank=True,
         null=True,
-        help_text="Optional: Upload your company logo.",
     )
 
     RATING_CHOICES = [
@@ -206,14 +180,8 @@ class Testimonial(models.Model):
         (4, "4 Stars"),
         (5, "5 Stars"),
     ]
-    rating = models.IntegerField(
-        choices=RATING_CHOICES, default=5, help_text="Client's rating (1-5 stars)."
-    )
-
-    is_approved = models.BooleanField(
-        default=False,
-        help_text="Only approved testimonials will be shown on the website.",
-    )
+    rating = models.IntegerField(choices=RATING_CHOICES, default=5)
+    is_approved = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -7,6 +7,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Secret & Debug from .env
 DEBUG = "True"
 SECRET_KEY = "django-insecure-*a4%+uy^e3e@z%77c(_1c7452b60k%=6#bfan)yltq*wu$3z0@"
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": "didwqunzh",
+    "API_KEY": "456835186462772",
+    "API_SECRET": "_Rw702yJBnwmE_BIGWIP7qFmKiQ",
+}
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 
 ALLOWED_HOSTS = [
     "bharatsolanke.info",
@@ -29,18 +36,20 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "Home",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 # Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 # Root URL Configuration
@@ -91,11 +100,8 @@ USE_TZ = True
 # Static files
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"  # <== Added for collectstatic
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Media files
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -109,3 +115,6 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 SERVER_EMAIL = config("SERVER_EMAIL")
+
+
+# CLOUDINARY_URL=cloudinary://456835186462772:_Rw702yJBnwmE_BIGWIP7qFmKiQ@didwqunzh

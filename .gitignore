@@ -3,6 +3,5 @@
 __pycache__/
 *.pyc
 *.log
-/staticfiles/
 .env.*
 *.DS_Store

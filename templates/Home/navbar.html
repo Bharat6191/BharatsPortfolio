@@ -50,7 +50,7 @@
     <div
       class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-xl-0">
         <h1 class="sitename">Bharat's Info & Tech</h1>
       </a>
 
@@ -67,8 +67,7 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      
-      <a class="btn-getstarted" href="{% url 'home' %}#contact"><i class="bi bi-arrow-right"></i> Hire Me</a>
+      <a class="btn-getstarted" href="{% url 'home' %}#contact"><i class="bi bi-arrow-right">Hire Me</i> </a>
 
     </div>
   </header>

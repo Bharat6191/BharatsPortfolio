@@ -5,8 +5,8 @@ from decouple import config  # <== Added for .env support
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Secret & Debug from .env
-DEBUG = os.getenv("DEBUG", "False") == "True"
-SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = "True"
+SECRET_KEY = "django-insecure-*a4%+uy^e3e@z%77c(_1c7452b60k%=6#bfan)yltq*wu$3z0@"
 
 ALLOWED_HOSTS = [
     "bharatsolanke.info",

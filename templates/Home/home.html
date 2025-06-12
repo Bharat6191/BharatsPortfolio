@@ -73,7 +73,7 @@
         <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
           <div class="about-image position-relative">
             {% if about_content.about_image %}
-            <img src="{{ about_content.about_image.url }}" class="img-fluid rounded-4 shadow-sm" alt="About Image" loading="lazy" style="height:700px">
+            <img src="{{ about_content.about_image.url }}" class="img-fluid rounded-4 shadow-sm" alt="About Image" loading="lazy" style="height:350px">
             {% endif %}
           </div>
         </div>
@@ -395,9 +395,8 @@
   
   </section>
   
-  <div class="modal fade" id="testimonialModal" tabindex="-1" aria-labelledby="testimonialModalLabel" aria-hidden="true">
-  </div>
-
+  {# Removed the duplicate empty modal div below #}
+  
   <div class="modal fade" id="testimonialModal" tabindex="-1" aria-labelledby="testimonialModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
@@ -777,18 +776,22 @@
         color: #bbbbbb;
         opacity: 0.7;
     }
+
     .form-control::-webkit-input-placeholder {
         color: #bbbbbb;
         opacity: 0.7;
     }
+
     .form-control::-moz-placeholder {
         color: #bbbbbb;
         opacity: 0.7;
     }
+
     .form-control:-ms-input-placeholder {
         color: #bbbbbb;
         opacity: 0.7;
     }
+
     .form-control:-moz-placeholder {
         color: #bbbbbb;
         opacity: 0.7;
@@ -885,20 +888,21 @@
     }
 
     @media (max-width: 767.98px) {
-        .testimonials .section-title .d-flex {
-            flex-direction: column;
-            align-items: center !important;
-        }
-        .testimonials .section-title .text-start,
-        .testimonials .section-title .text-end {
-            text-align: center !important;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        .testimonials .section-title .text-end button {
-            width: 100%;
-        }
+    .testimonials .section-title .d-flex {
+        flex-direction: column;
+        align-items: center !important;
     }
+    .testimonials .section-title .text-start,
+    .testimonials .section-title .text-end {
+        text-align: center !important;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .testimonials .section-title .text-end button {
+        width: 100%;
+    }
+    }
+
     .custom-file-upload {
         display: inline-flex;
         align-items: center;

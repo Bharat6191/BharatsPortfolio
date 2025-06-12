@@ -7,13 +7,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Secret & Debug from .env
 DEBUG = "True"
 SECRET_KEY = "django-insecure-*a4%+uy^e3e@z%77c(_1c7452b60k%=6#bfan)yltq*wu$3z0@"
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "didwqunzh",
-    "API_KEY": "456835186462772",
-    "API_SECRET": "_Rw702yJBnwmE_BIGWIP7qFmKiQ",
-}
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
 
 ALLOWED_HOSTS = [
     "bharatsolanke.info",
@@ -101,6 +94,13 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": config("CLOUD_NAME"),
+    "API_KEY": config("CLOUD_API_KEY"),
+    "API_SECRET": config("CLOUD_API_SECRET"),
+}
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # Default primary key field type

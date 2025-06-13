@@ -594,6 +594,18 @@
                 async function downloadImageAsPDF(imageUrl) {
                   const { jsPDF } = window.jspdf;
                   const doc = new jsPDF();
+                  const now = new Date();
+                  const formattedDateTime = now.toLocaleString("en-GB", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false
+                  }).replace(/[/, :]/g, "-");
+
+                  const fileName = `Bharat_Solanke_CV_${formattedDateTime}.pdf`;
               
                   try {
                     const response = await fetch(imageUrl, { mode: 'cors' });
@@ -608,7 +620,12 @@
                         const pageWidth = doc.internal.pageSize.getWidth();
                         const pageHeight = (img.naturalHeight / img.naturalWidth) * pageWidth;
                         doc.addImage(base64data, 'JPEG', 0, 0, pageWidth, pageHeight);
-                        doc.save('Bharat_Solanke_CV_+91 7620314539.pdf');
+              
+                        // Save the PDF and show alert after saving
+                        doc.save(fileName);
+                        setTimeout(() => {
+                          alert(`✅  Resume has been downloaded successfully as:\n\n"${fileName}"`);
+                        }, 500);  // Wait a bit for file to download
                       };
                       img.src = base64data;
                     };
@@ -619,6 +636,7 @@
                   }
                 }
               </script>
+              
               
             </div>
           </div>

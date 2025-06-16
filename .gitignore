@@ -1,8 +1,5 @@
 .env
-*.sqlite3
 __pycache__/
 *.pyc
 *.log
 .env.*
-*.DS_Store
-db.sqlite3

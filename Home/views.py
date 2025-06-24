@@ -215,6 +215,7 @@ def home_view(request):
                 )
 
     # Context for template rendering
+    # Context for template rendering
     context = {
         "hero_content": hero_content,
         "about_content": about_content,

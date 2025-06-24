@@ -235,7 +235,7 @@ def home_view(request):
 
 def blogs(request):
     query = request.GET.get("q", "")
-    blogs = Blog.objects.all()
+    blogs = Blog.objects.all().order_by("-published_date")
 
     if query:
         blogs = blogs.filter(
@@ -244,7 +244,7 @@ def blogs(request):
             | Q(badge_text__icontains=query)
         )
 
-    paginator = Paginator(blogs, 1)  # 5 blogs per page
+    paginator = Paginator(blogs, 10)  # 5 blogs per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 

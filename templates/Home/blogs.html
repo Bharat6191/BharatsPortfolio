@@ -24,7 +24,7 @@
           <div>
             <span class="badge bg-warning text-dark mb-2">{{ blog.badge_text }}</span>
             <h4 class="card-title">{{ blog.heading }}</h4>
-            <p class="card-text">{{ blog.paragraph|truncatewords:30 }}</p>
+            <p class="card-text">{{ blog.paragraph }}</p>
           </div>
           <div class="d-flex gap-3 mt-3">
             <a href="{{ blog.read_blog_url }}" class="btn btn-outline-light btn-sm" target="_blank"><i class="bi bi-book"></i> Read Blog</a>

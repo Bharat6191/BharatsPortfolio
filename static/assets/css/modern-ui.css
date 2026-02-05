@@ -1,0 +1,458 @@
+:root {
+    /* --- OPTION 1: DEEP OCEAN & ELECTRIC TEAL (Commented out) ---
+    --bg-dark: #020617; 
+    --bg-surface: #0f172a; 
+    --bg-card: rgba(30, 41, 59, 0.4); 
+    
+    --primary-accent: #2dd4bf; 
+    --primary-glow: rgba(45, 212, 191, 0.4);
+    
+    --secondary-accent: #3b82f6; 
+    --secondary-glow: rgba(59, 130, 246, 0.4);
+    
+    --accent-gradient: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+    
+    --text-main: #f8fafc; 
+    --text-muted: #94a3b8; 
+    
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    */
+
+    /* --- CURRENT THEME: LUXURY GOLD --- */
+    --bg-dark: #050505;
+    --bg-surface: #121212;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    
+    --primary-accent: #fbbf24; /* Amber 400 */
+    --primary-glow: rgba(251, 191, 36, 0.4);
+    
+    --secondary-accent: #d97706; /* Amber 600 */
+    --secondary-glow: rgba(217, 119, 6, 0.4);
+    
+    --accent-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+
+    --text-main: #ffffff;
+    --text-muted: #a3a3a3; /* Neutral 400 */
+    
+    --glass-bg: rgba(18, 18, 18, 0.8);
+    
+    --glass-border: rgba(251, 191, 36, 0.15); /* Gold tint on borders */
+    --glass-highlight: rgba(251, 191, 36, 0.05);
+    --glass-blur: 20px;
+
+    --font-main: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.05) 0%, transparent 40%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-main);
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Navbar (Island Style)
+-------------------------------------------------------------------------- */
+#header {
+    padding: 20px 0;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: rgba(0, 0, 0, 0.6); /* Visible dark background */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 997;
+}
+
+#header.scrolled {
+    background: transparent !important; /* Clear main bar to let Island Pill work */
+    border-bottom: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.header-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 40px; /* Add some spacing */
+}
+
+/* Scrolled State - Floating Pill */
+#header.scrolled .header-container {
+    /* Liquid Background Effect */
+    background: linear-gradient(120deg, rgba(5, 5, 5, 0.9), rgba(30, 25, 10, 0.85), rgba(5, 5, 5, 0.9));
+    background-size: 400% 400%;
+    animation: liquid-flow 8s ease-in-out infinite;
+    
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(251, 191, 36, 0.15) !important;
+    border-radius: 100px;
+    padding: 10px 30px;
+    margin: 0 5%;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4) !important;
+}
+
+@keyframes liquid-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo .sitename {
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navmenu a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.navmenu a:hover, .navmenu a.active {
+    color: var(--primary-accent);
+    background: rgba(251, 191, 36, 0.1); /* Gold Tint */
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+}
+
+.btn-getstarted {
+    background: var(--accent-gradient) !important;
+    border-radius: 100px !important;
+    padding: 10px 28px !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--primary-glow);
+    border: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+.btn-getstarted:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 40px var(--primary-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section - "Rich" & Glowing
+-------------------------------------------------------------------------- */
+.hero {
+    position: relative;
+    padding: 140px 0 100px;
+    overflow: hidden;
+}
+
+/* Background Glow Effect */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+    opacity: 0.2;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(80px);
+}
+
+.hero .agency-name h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--secondary-accent);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.hero .main-heading h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
+}
+
+.hero .cta-button .btn {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: #fff;
+    padding: 15px 40px;
+    border-radius: 100px;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.hero .cta-button .btn:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: translateX(5px);
+}
+
+/* Fluid Image Glow */
+.visual-content .fluid-img {
+    filter: drop-shadow(0 0 50px rgba(109, 40, 217, 0.4));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* --------------------------------------------------------------------------
+   Cards (Services, Experience, Feaures) - Glassmorphism
+-------------------------------------------------------------------------- */
+.service-card, .feature-item, .about-content, .experience-item, .contact-info-box {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Shine Effect */
+.service-card::after, .feature-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(115deg, transparent, transparent, rgba(255,255,255,0.05), transparent);
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.service-card:hover::after, .feature-item:hover::after {
+    left: 100%;
+}
+
+.service-card:hover, .feature-item:hover, .experience-item:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.service-icon i {
+    background: linear-gradient(135deg, var(--bg-surface), var(--glass-bg));
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.service-card:hover .service-icon i {
+    background: var(--primary-accent);
+    border-color: var(--primary-accent);
+    transform: bg-scale(1.1) rotate(5deg);
+}
+
+/* --------------------------------------------------------------------------
+   Section Titles
+-------------------------------------------------------------------------- */
+.section-title h2 {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--primary-accent);
+    font-weight: 700;
+}
+
+.section-title div {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.description-title {
+    background: linear-gradient(to right, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Navigation
+-------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+    #header .header-container {
+        padding: 0 20px;
+    }
+    
+    .navmenu ul {
+        background: rgba(5, 5, 5, 0.95) !important;
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 40px 30px;
+        inset: 80px 15px auto 15px; /* Floating panel */
+        border-radius: 20px;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+        z-index: 9999;
+    }
+    
+    .navmenu a {
+        font-size: 1.2rem;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        border-radius: 0;
+    }
+    
+    .navmenu a:last-child {
+        border-bottom: none;
+    }
+    
+    .navmenu a:hover, .navmenu a.active {
+        color: var(--secondary-accent);
+        background: transparent;
+        padding-left: 10px;
+    }
+    
+    .mobile-nav-toggle {
+        color: #fff;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Testimonials & Contact
+-------------------------------------------------------------------------- */
+.testimonial-item {
+    background: transparent;
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.contact-form-wrapper {
+    background: rgba(20, 20, 20, 0.6) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+}
+
+input, textarea, select {
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    transition: .3s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary-accent) !important;
+    background: rgba(0,0,0,0.5) !important;
+    box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.2) !important;
+}
+
+/* Footer Styling */
+.footer {
+    background: #000;
+    padding-top: 80px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer h4 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.social-links a {
+    background: rgba(255,255,255,0.05);
+    border: none !important;
+    color: #fff !important;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: var(--primary-accent);
+    transform: translateY(-3px);
+}
+
+/* --------------------------------------------------------------------------
+   Resume Button - Special Styling
+-------------------------------------------------------------------------- */
+.btn-resume {
+    display: inline-block;
+    background: var(--primary-accent); /* Solid Gold */
+    color: #000 !important; /* Black text for contrast */
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--primary-accent);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3); /* Gold Glow */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-resume:hover {
+    background: transparent;
+    color: var(--primary-accent) !important;
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-resume::before {
+    content: '\F30A'; /* Bootstrap Icon: default download */
+    font-family: 'bootstrap-icons';
+    margin-right: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+@media (max-width: 991px) {
+    .btn-getstarted {
+        padding: 6px 16px !important;
+        font-size: 0.8rem !important;
+        margin-left: 10px !important;
+    }
+    
+    .btn-resume {
+        padding: 6px 14px;
+        font-size: 0.75rem;
+        letter-spacing: 0.3px;
+        margin-top: 5px;
+        width: auto; /* Ensure it doesn't stretch unless needed */
+    }
+}
